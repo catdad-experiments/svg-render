@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const render = require('./');
 
 const readStdin = () => new Promise(resolve => {
@@ -22,6 +24,7 @@ const readStdin = () => new Promise(resolve => {
 
   process.stdout.write(output);
 })().catch(e => {
+  // eslint-disable-next-line no-console
   console.error(e);
   process.exitCode = 1;
 });
