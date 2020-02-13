@@ -1,0 +1,19 @@
+{
+  "name": "svg-render",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kiril Vatev <vatev.1@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "canvas": "^2.6.1",
+    "cheerio": "^1.0.0-rc.3",
+    "imagemin-pngquant": "^8.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0"
+  }
+}
