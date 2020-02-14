@@ -39,7 +39,7 @@ svg-render < input.svg > output.png
 The generated images are unoptimized. You can optimize them with something like [`pngmin-cli`](https://github.com/catdad-experiments/pngmin-cli):
 
 ```bash
-npx svg-render < input.svg | npm pngmin-cli > output.png
+npx svg-render < input.svg | npx pngmin-cli > output.png
 ```
 
 ## API
