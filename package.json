@@ -1,7 +1,7 @@
 {
   "name": "svg-render",
   "version": "1.0.0",
-  "description": "",
+  "description": "Render high-quality PNG images from an SVG",
   "main": "index.js",
   "bin": {
     "svg-render": "./bin.js"
@@ -24,5 +24,13 @@
     "jimp": "^0.9.3",
     "mocha": "^7.0.1",
     "rootrequire": "^1.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/catdad-experiments/svg-render.git"
+  },
+  "bugs": {
+    "url": "https://github.com/catdad-experiments/svg-render/issues"
+  },
+  "homepage": "https://github.com/catdad-experiments/svg-render#readme"
 }
