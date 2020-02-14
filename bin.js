@@ -1,12 +1,18 @@
 #!/usr/bin/env node
 
-const { width, height } = require('getopts')(process.argv.slice(2), {
+const { width, height, help } = require('getopts')(process.argv.slice(2), {
   alias: {
     help: 'h',
     width: 'w',
     height: 'h',
   }
 });
+
+if (help) {
+  // eslint-disable-next-line no-console
+  console.log('\nusage:\n  svg-render [-w|--width=N] [-h|--height=N] < input.svg > output.png');
+  process.exit(0);
+}
 
 const render = require('./');
 
