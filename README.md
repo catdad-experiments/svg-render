@@ -62,3 +62,5 @@ const render = require('svg-render');
   await promisify(fs.writeFile)(`./output.png`, outputBuffer);
 })();
 ```
+
+_Note: both `width` and `height` are optional. If neither is provided, the PNG will be the original size of the SVG. If only one of the properties is provided, the other will automatically be scaled proportionally to the original SVG size._
