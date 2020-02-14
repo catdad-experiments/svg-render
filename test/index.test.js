@@ -47,4 +47,15 @@ describe('module', () => {
 
     await validateImage({ png, width: 400, height: 200, hash: 'c4cfKeE6dk0' });
   });
+
+  it('errors if the input is not an SVG image', async () => {
+    let error;
+
+    await render({ buffer: 'I am but a regular string' }).catch(e => {
+      error = e;
+    });
+
+    expect(error).to.be.instanceOf(Error);
+    expect(error).to.have.property('message', 'input was not a valid SVG image');
+  });
 });

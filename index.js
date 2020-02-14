@@ -5,6 +5,10 @@ module.exports = async ({ buffer, width, height }) => {
   const $ = cheerio.load(buffer.toString());
   const $svg = $('svg');
 
+  if ($svg.length < 1) {
+    throw new Error('input was not a valid SVG image');
+  }
+
   const { naturalWidth, naturalHeight } = await loadImage(Buffer.from($.xml('svg')));
 
   let w, h;
