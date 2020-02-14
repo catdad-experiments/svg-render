@@ -7,7 +7,7 @@
     "svg-render": "./bin.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --slow 0 test/**/*.test.js"
   },
   "author": "Kiril Vatev <vatev.1@gmail.com>",
   "license": "ISC",
@@ -16,6 +16,10 @@
     "cheerio": "^1.0.0-rc.3"
   },
   "devDependencies": {
-    "eslint": "^5.16.0"
+    "chai": "^4.2.0",
+    "eslint": "^5.16.0",
+    "is-png": "^2.0.0",
+    "jimp": "^0.9.3",
+    "mocha": "^7.0.1"
   }
 }
