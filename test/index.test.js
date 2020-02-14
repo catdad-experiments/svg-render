@@ -51,11 +51,45 @@ describe('module', () => {
   it('errors if the input is not an SVG image', async () => {
     let error;
 
-    await render({ buffer: 'I am but a regular string' }).catch(e => {
+    await render({ buffer: Buffer.from('I am but a regular string') }).catch(e => {
       error = e;
     });
 
     expect(error).to.be.instanceOf(Error);
-    expect(error).to.have.property('message', 'input was not a valid SVG image');
+    expect(error).to.have.property('message', '"options.buffer" is not a valid SVG image');
+  });
+
+  it('errors if no input is provided', async () => {
+    let error;
+
+    await render().catch(e => {
+      error = e;
+    });
+
+    expect(error).to.be.instanceOf(Error);
+    expect(error).to.have.property('message', 'required "options.buffer" is missing');
+  });
+
+  it('errors if input is provided incorrectly', async () => {
+    let error;
+
+    await render(Buffer.from('it does not matter')).catch(e => {
+      error = e;
+    });
+
+    expect(error).to.be.instanceOf(Error);
+    expect(error).to.have.property('message', 'required "options.buffer" is missing');
+  });
+
+  it('errors if input is provided as a string', async () => {
+    const input = '<svg viewBox="0 0 50 50"><circle cx="25" cy="25" r="25" fill="green"/><circle cx="40" cy="10" r="10" fill="pink"/></svg>';
+    let error;
+
+    await render({ buffer: input }).catch(e => {
+      error = e;
+    });
+
+    expect(error).to.be.instanceOf(Error);
+    expect(error).to.have.property('message', 'required "options.buffer" is missing');
   });
 });

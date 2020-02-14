@@ -1,12 +1,16 @@
 const { createCanvas, loadImage } = require('canvas');
 const cheerio = require('cheerio');
 
-module.exports = async ({ buffer, width, height }) => {
+module.exports = async ({ buffer, width, height } = {}) => {
+  if (!Buffer.isBuffer(buffer)) {
+    throw new Error('required "options.buffer" is missing');
+  }
+
   const $ = cheerio.load(buffer.toString());
   const $svg = $('svg');
 
   if ($svg.length < 1) {
-    throw new Error('input was not a valid SVG image');
+    throw new Error('"options.buffer" is not a valid SVG image');
   }
 
   const { naturalWidth, naturalHeight } = await loadImage(Buffer.from($.xml('svg')));
