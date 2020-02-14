@@ -1,6 +1,5 @@
 const { createCanvas, loadImage } = require('canvas');
 const cheerio = require('cheerio');
-const pngquant = require('imagemin-pngquant');
 
 module.exports = async ({ buffer, width, height }) => {
   const $ = cheerio.load(buffer.toString());
@@ -34,10 +33,5 @@ module.exports = async ({ buffer, width, height }) => {
 
   ctx.drawImage(image, 0, 0);
 
-  const png = canvas.toBuffer('image/png');
-
-  // use default compression options
-  const output = await pngquant()(png);
-
-  return output;
+  return canvas.toBuffer('image/png');
 };
