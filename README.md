@@ -17,13 +17,13 @@
 The easiest way to convert your SVG to a PNG is on the command line:
 
 ```bash
-npx svg-render < original.svg > output.png
+npx svg-render < input.svg > output.png
 ```
 
 You can also resive your SVG, since it is scalable after all:
 
 ```bash
-npx svg-render --width 512 < original.svg > output.png
+npx svg-render --width 512 < input.svg > output.png
 ```
 
 See `npx svg-render --help` for more info.
