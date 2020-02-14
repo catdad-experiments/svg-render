@@ -12,7 +12,7 @@
 [npm.link]: https://www.npmjs.com/package/svg-render
 [npm-version.svg]: https://img.shields.io/npm/v/svg-render.svg
 
-# CLI
+## CLI
 
 The easiest way to convert your SVG to a PNG is on the command line:
 
@@ -42,7 +42,7 @@ The generated images are unoptimized. You can optimize them with something like 
 npx svg-render < input.svg | npm pngmin-cli > output.png
 ```
 
-# API
+## API
 
 You can require this module in your script as well:
 
