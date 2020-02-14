@@ -11,6 +11,10 @@
   },
   "author": "Kiril Vatev <vatev.1@gmail.com>",
   "license": "ISC",
+  "files": [
+    "bin.js",
+    "index.js"
+  ],
   "dependencies": {
     "canvas": "^2.6.1",
     "cheerio": "^1.0.0-rc.3",
