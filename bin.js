@@ -1,5 +1,13 @@
 #!/usr/bin/env node
 
+const { width, height } = require('getopts')(process.argv.slice(2), {
+  alias: {
+    help: 'h',
+    width: 'w',
+    height: 'h',
+  }
+});
+
 const render = require('./');
 
 const readStdin = () => new Promise(resolve => {
@@ -20,7 +28,7 @@ const readStdin = () => new Promise(resolve => {
 
 (async () => {
   const input = await readStdin();
-  const output = await render({ buffer: input, width: 512 });
+  const output = await render({ buffer: input, width, height });
 
   process.stdout.write(output);
 })().catch(e => {
