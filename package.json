@@ -32,5 +32,11 @@
   "bugs": {
     "url": "https://github.com/catdad-experiments/svg-render/issues"
   },
-  "homepage": "https://github.com/catdad-experiments/svg-render#readme"
+  "homepage": "https://github.com/catdad-experiments/svg-render#readme",
+  "keywords": [
+    "svg",
+    "png",
+    "convert",
+    "cli"
+  ]
 }
