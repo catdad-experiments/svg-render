@@ -32,7 +32,9 @@ const readStdin = () => new Promise(resolve => {
 
   process.stdout.write(output);
 })().catch(e => {
+  const error = e.message.includes('options.buffer') ? new Error('input was not a valid SVG image') : e;
+
   // eslint-disable-next-line no-console
-  console.error(e);
+  console.error(error);
   process.exitCode = 1;
 });

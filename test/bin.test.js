@@ -134,4 +134,14 @@ describe('cli', () => {
       await validateImage({ png, width: 200, height: 200, hash });
     });
   });
+
+  describe('errors', () => {
+    it('when given non-svg data', async () => {
+      const { stdout, stderr, err } = await exec([], {}, Buffer.from('I am a string, yes I am only a string'));
+
+      expect(stdout.toString()).to.equal('');
+      expect(stderr.toString()).to.include('Error: input was not a valid SVG image');
+      expect(err).to.have.property('code', 1);
+    });
+  });
 });
