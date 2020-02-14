@@ -59,7 +59,7 @@ const render = require('svg-render');
     height: 512          // optional, defaults to original size of svg
   });
 
-  await promisify(fs.writeFile)(`./output.png`, outputBuffer);
+  await promisify(fs.writeFile)('./output.png', outputBuffer);
 })();
 ```
 
