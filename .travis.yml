@@ -1,5 +1,14 @@
 language: node_js
 
+node_js:
+  - '14'
+  - '12'
+
+os:
+  - linux
+  - osx
+  - windows
+
 env:
   global:
     - FORCE_COLOR=1
@@ -14,19 +23,16 @@ jobs:
   include:
     - stage: test
       os: linux
-      node_js: '12'
-    - stage: test
-      os: osx
       node_js: '10'
     - stage: test
-      os: windows
+      os: osx
       node_js: '8'
+    - stage: test
+      os: windows
+      node_js: '10'
     - stage: test
       os: osx
       node_js: node
-    - stage: test
-      os: linux
-      node_js: '10'
     - stage: npm release
       if: tag IS present
       os: linux
