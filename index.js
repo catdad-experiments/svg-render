@@ -1,12 +1,49 @@
 const { createCanvas, loadImage } = require('canvas');
 const cheerio = require('cheerio');
 
-module.exports = async ({ buffer, width, height } = {}) => {
+const resolveUseTags = ($, $svg) => {
+  $svg.find('use').each((i, elem) => {
+    const $elem = $(elem);
+    const id = $elem.attr('href');
+    const $shape = $(id).clone();
+    $shape.removeAttr('id');
+
+    const $g = $('<g></g>');
+    const position = { x: 0, y: 0 };
+
+    for (let key in $elem.get(0).attribs) {
+      if (key === 'href') {
+        continue;
+      }
+
+      const value = $elem.attr(key);
+
+      if (key === 'x') {
+        position.x = value;
+        continue;
+      }
+
+      if (key === 'y') {
+        position.y = value;
+        continue;
+      }
+
+      $shape.attr(key, value);
+    }
+
+    $g.attr('transform', `translate(${position.x}, ${position.y})`);
+
+    $shape.wrap($g);
+    $elem.replaceWith($g);
+  });
+};
+
+module.exports = async ({ buffer, width, height, expandUseTags = true } = {}) => {
   if (!Buffer.isBuffer(buffer)) {
     throw new Error('required "options.buffer" is missing');
   }
 
-  const $ = cheerio.load(buffer.toString());
+  const $ = cheerio.load(buffer.toString(), { xmlMode: true });
   const $svg = $('svg');
 
   if ($svg.length < 1) {
@@ -34,8 +71,11 @@ module.exports = async ({ buffer, width, height } = {}) => {
   $svg.attr('width', `${w}`);
   $svg.attr('height', `${h}`);
 
-  const image = await loadImage(Buffer.from($.xml('svg')));
+  if (expandUseTags) {
+    resolveUseTags($, $svg);
+  }
 
+  const image = await loadImage(Buffer.from($.xml('svg')));
   const canvas = createCanvas(w, h);
   const ctx = canvas.getContext('2d');
 

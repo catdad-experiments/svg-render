@@ -48,6 +48,41 @@ describe('module', () => {
     await validateImage({ png, width: 400, height: 200, hash: 'c4cfKeE6dk0' });
   });
 
+  it('resolves use tags in svg by default', async () => {
+    const input = `
+    <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <circle id="circle" r="5" fill="black"/>
+        <rect id="rect" width="10" height="10" fill="black" />
+      </defs>
+      <circle cx="25" cy="25" r="25" fill="red"/>
+      <use x="15" y="15" href="#circle" fill="pink" />
+      <use x="10" y="30" href="#rect" />
+      <use x="30" y="30" href="#rect" />
+    </svg>`;
+    const png = await render({ buffer: Buffer.from(input) });
+
+    await validateImage({ png, width: 50, height: 50, hash: 'c7343wq04L3' });
+  });
+
+  it('optionally preserves use tagsresolves use tags in svg by default', async () => {
+    const input = `
+    <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <circle id="circle" r="5" fill="black"/>
+        <rect id="rect" width="10" height="10" fill="black" />
+      </defs>
+      <circle cx="25" cy="25" r="25" fill="red"/>
+      <use x="15" y="15" href="#circle" fill="pink" />
+      <use x="10" y="30" href="#rect" />
+      <use x="30" y="30" href="#rect" />
+    </svg>`;
+    const png = await render({ buffer: Buffer.from(input), expandUseTags: false });
+
+    // renders just the red circle
+    await validateImage({ png, width: 50, height: 50, hash: '800000a00E0' });
+  });
+
   it('errors if the input is not an SVG image', async () => {
     let error;
 
