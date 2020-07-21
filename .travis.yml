@@ -22,8 +22,8 @@ script:
 jobs:
   exclude:
     # https://github.com/Automattic/node-canvas/issues/1626
-    - node: '14'
-      os: osx
+    - os: osx
+      node_js: '14'
   include:
     - stage: test
       os: linux
