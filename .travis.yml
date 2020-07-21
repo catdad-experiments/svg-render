@@ -20,6 +20,10 @@ script:
   - npm test
 
 jobs:
+  exclude:
+    # https://github.com/Automattic/node-canvas/issues/1626
+    - node: '14'
+      os: osx
   include:
     - stage: test
       os: linux
@@ -31,7 +35,7 @@ jobs:
       os: windows
       node_js: '10'
     - stage: test
-      os: osx
+      os: windows
       node_js: node
     - stage: npm release
       if: tag IS present
