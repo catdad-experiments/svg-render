@@ -1,5 +1,14 @@
 language: node_js
 
+node_js:
+  - '14'
+  - '12'
+
+os:
+  - linux
+  - osx
+  - windows
+
 env:
   global:
     - FORCE_COLOR=1
@@ -11,22 +20,23 @@ script:
   - npm test
 
 jobs:
+  exclude:
+    # https://github.com/Automattic/node-canvas/issues/1626
+    - os: osx
+      node_js: '14'
   include:
     - stage: test
       os: linux
-      node_js: '12'
+      node_js: '10'
     - stage: test
       os: osx
+      node_js: '8'
+    - stage: test
+      os: windows
       node_js: '10'
     - stage: test
       os: windows
-      node_js: '8'
-    - stage: test
-      os: osx
       node_js: node
-    - stage: test
-      os: linux
-      node_js: '10'
     - stage: npm release
       if: tag IS present
       os: linux
