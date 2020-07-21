@@ -47,19 +47,16 @@ npx svg-render < input.svg | npx pngmin-cli > output.png
 You can require this module in your script as well:
 
 ```javascript
-const { promisify } = require('util');
-const fs = require('fs');
+const { promises: fs } = require('fs');
 const render = require('svg-render');
 
 (async () => {
-  const inputBuffer = await promisify(fs.readFile)('/path/to/my/input.svg');
   const outputBuffer = await render({
-    buffer: inputBuffer, // required
-    width: 512,          // optional, defaults to original size of svg
-    height: 512          // optional, defaults to original size of svg
+    buffer: await fs.readFile('/path/to/my/input.svg'),
+    width: 512
   });
 
-  await promisify(fs.writeFile)('./output.png', outputBuffer);
+  await fs.writeFile('./output.png', outputBuffer);
 })();
 ```
 
