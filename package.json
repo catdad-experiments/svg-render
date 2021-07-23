@@ -16,9 +16,9 @@
     "index.js"
   ],
   "dependencies": {
-    "canvas": "^2.6.1",
-    "cheerio": "^1.0.0-rc.3",
-    "getopts": "^2.2.5"
+    "canvas": "^2.8.0",
+    "cheerio": "^1.0.0-rc.10",
+    "getopts": "^2.3.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
