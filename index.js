@@ -44,13 +44,13 @@ module.exports = async ({ buffer, width, height, expandUseTags = true } = {}) =>
   }
 
   const $ = cheerio.load(buffer.toString(), { xmlMode: true });
-  const $svg = $('svg');
+  const $svg = $('svg').first();
 
   if ($svg.length < 1) {
     throw new Error('"options.buffer" is not a valid SVG image');
   }
 
-  const { naturalWidth, naturalHeight } = await loadImage(Buffer.from($.xml('svg')));
+  const { naturalWidth, naturalHeight } = await loadImage(Buffer.from($.xml($svg)));
 
   let w, h;
 
@@ -75,7 +75,7 @@ module.exports = async ({ buffer, width, height, expandUseTags = true } = {}) =>
     resolveUseTags($, $svg);
   }
 
-  const image = await loadImage(Buffer.from($.xml('svg')));
+  const image = await loadImage(Buffer.from($.xml($svg)));
   const canvas = createCanvas(w, h);
   const ctx = canvas.getContext('2d');
 
