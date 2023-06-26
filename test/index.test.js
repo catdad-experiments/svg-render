@@ -48,6 +48,19 @@ describe('module', () => {
     await validateImage({ png, width: 400, height: 200, hash: 'c4cfKeE6dk0' });
   });
 
+  it('converts an svg with a nested svg inside it', async () => {
+    const input = `
+    <svg viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" width="512" height="512">
+      <svg viewBox="0 0 10 10" width="100" height="100" version="1.1" xmlns="http://www.w3.org/2000/svg"><circle cx="5" cy="5" r="5" fill="pink"/></svg>
+    </svg>
+    `;
+    const png = await render({ buffer: Buffer.from(input), width: 512, height: 512 });
+
+    require('fs').writeFileSync('out.png', png);
+
+    await validateImage({ png, width: 512, height: 512, hash: '8000w0a02E0' });
+  });
+
   it('resolves use tags in svg by default', async () => {
     const input = `
     <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
