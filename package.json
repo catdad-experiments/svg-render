@@ -1,6 +1,6 @@
 {
   "name": "svg-render",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Render high-quality PNG images from an SVG",
   "main": "index.js",
   "bin": {
