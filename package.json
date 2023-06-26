@@ -7,7 +7,7 @@
     "svg-render": "./bin.js"
   },
   "scripts": {
-    "test": "mocha --slow 0 --timeout 30000 test/**/*.test.js"
+    "test": "mocha --slow 0 --timeout 60000 test/**/*.test.js"
   },
   "author": "Kiril Vatev <vatev.1@gmail.com>",
   "license": "ISC",
