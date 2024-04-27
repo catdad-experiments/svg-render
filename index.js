@@ -1,4 +1,4 @@
-const { createCanvas, loadImage } = require('canvas');
+const { createCanvas, loadImage } = require('@napi-rs/canvas');
 const cheerio = require('cheerio');
 
 const resolveUseTags = ($, $svg) => {
@@ -38,7 +38,7 @@ const resolveUseTags = ($, $svg) => {
   });
 };
 
-module.exports = async ({ buffer, width, height, expandUseTags = true } = {}) => {
+module.exports = async ({ buffer, width, height } = {}) => {
   if (!Buffer.isBuffer(buffer)) {
     throw new Error('required "options.buffer" is missing');
   }
@@ -71,9 +71,7 @@ module.exports = async ({ buffer, width, height, expandUseTags = true } = {}) =>
   $svg.attr('width', `${w}`);
   $svg.attr('height', `${h}`);
 
-  if (expandUseTags) {
-    resolveUseTags($, $svg);
-  }
+  resolveUseTags($, $svg);
 
   const image = await loadImage(Buffer.from($.xml($svg)));
   const canvas = createCanvas(w, h);

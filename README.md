@@ -64,6 +64,5 @@ Options:
 * `buffer` _`<Buffer>`_: Required. The SVG being rendered.
 * `width` _`<Number>`_: Optional. The desired width of the output PNG. Defaults to the width defined in the SVG (or proportionally scaled based on `height` when defined).
 * `height` _`<Number>`_: Optional. The desired height of the output PNG. Defaults to the height defined in the SVG (or proportionally scaled based on `width` when defined).
-* `expandUseTags` _`<Boolean>`_: Optional. Whether to replace instances of `use` tags in the SVG with the contents that those tags are linking to. This is generally necessary for rendering method being used to work correctly. Defaults to `true`.
 
 _Note: both `width` and `height` are optional, but they work together. If neither is provided, the PNG will be the original size of the SVG. If only one of the properties is provided, the other will automatically be scaled proportionally to the original SVG size. If both are provided, the PNG will be stretched to that exact size, regardless of proportions._

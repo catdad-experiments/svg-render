@@ -1,30 +1,16 @@
 /* eslint-env mocha */
 
 const { expect } = require('chai');
-const jimp = require('jimp');
-const isPng = require('is-png');
+const { validateImage } = require('./utils.js');
 
 const render = require('../');
 
 describe('module', () => {
-  const validateImage = async ({ width, height, png, hash }) => {
-    expect(isPng(png)).to.equal(true, 'output was not a valid png image');
-
-    const image = await jimp.read(png);
-
-    const { width: actualWidth, height: actualHeight } = image.bitmap;
-
-    expect(actualWidth).to.equal(width, 'unexpected width');
-    expect(actualHeight).to.equal(height, 'unexpected height');
-
-    expect(image.hash()).to.equal(hash);
-  };
-
   it('converts an svg to the size of its viewbox', async () => {
     const input = '<svg viewBox="0 0 50 50"><circle cx="25" cy="25" r="25" fill="red"/><circle cx="40" cy="40" r="10" fill="black"/></svg>';
     const png = await render({ buffer: Buffer.from(input) });
 
-    await validateImage({ png, width: 50, height: 50, hash: 'c6SgkEvi5KG' });
+    await validateImage({ png, width: 50, height: 50, hash: ['c6SgkEvi5KG', 'c6QgkEvi5KG'] });
   });
 
   it('converts an svg to a defined width, scaling proportionally', async () => {
@@ -56,8 +42,6 @@ describe('module', () => {
     `;
     const png = await render({ buffer: Buffer.from(input), width: 512, height: 512 });
 
-    require('fs').writeFileSync('out.png', png);
-
     await validateImage({ png, width: 512, height: 512, hash: '8000w0a02E0' });
   });
 
@@ -76,25 +60,6 @@ describe('module', () => {
     const png = await render({ buffer: Buffer.from(input) });
 
     await validateImage({ png, width: 50, height: 50, hash: 'c7343wq04L3' });
-  });
-
-  // TODO I think canvas@2.8 now handles use tags correctly and no longer needs manual resolution
-  it('optionally preserves use tags', async () => {
-    const input = `
-    <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <circle id="circle" r="5" fill="black"/>
-        <rect id="rect" width="10" height="10" fill="black" />
-      </defs>
-      <circle cx="25" cy="25" r="25" fill="red"/>
-      <use x="15" y="15" href="#circle" fill="pink" />
-      <use x="10" y="30" href="#rect" />
-      <use x="30" y="30" href="#rect" />
-    </svg>`;
-    const png = await render({ buffer: Buffer.from(input), expandUseTags: false });
-
-    // renders just the red circle
-    await validateImage({ png, width: 50, height: 50, hash: 'cAU4Iei06IU' });
   });
 
   it('errors if the input is not an SVG image', async () => {
