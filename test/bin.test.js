@@ -5,8 +5,8 @@ const { spawn } = require('child_process');
 const { expect } = require('chai');
 const eos = require('end-of-stream');
 const root = require('rootrequire');
-const isPng = require('is-png');
-const jimp = require('jimp');
+
+const { validateImage } = require('./utils.js');
 
 describe('cli', () => {
   const exec = async (args, options = {}, input = Buffer.from('')) => {
@@ -39,19 +39,6 @@ describe('cli', () => {
     });
   };
 
-  const validateImage = async ({ width, height, png, hash }) => {
-    expect(isPng(png)).to.equal(true, 'output was not a valid png image');
-
-    const image = await jimp.read(png);
-
-    const { width: actualWidth, height: actualHeight } = image.bitmap;
-
-    expect(actualWidth).to.equal(width, 'unexpected width');
-    expect(actualHeight).to.equal(height, 'unexpected height');
-
-    expect(image.hash()).to.equal(hash);
-  };
-
   const getImage = async (input, args = []) => {
     const { stdout, stderr, err } = await exec(args, {}, Buffer.from(input));
 
@@ -66,7 +53,7 @@ describe('cli', () => {
     const input = '<svg viewBox="0 0 50 50"><circle cx="25" cy="25" r="25" fill="red"/><circle cx="40" cy="40" r="10" fill="black"/></svg>';
     const png = await getImage(input);
 
-    await validateImage({ png, width: 50, height: 50, hash: 'c6SgkEvi5KG' });
+    await validateImage({ png, width: 50, height: 50, hash: ['c6SgkEvi5KG', 'c6QgkEvi5KG'] });
   });
 
   it('converts an svg to a defined width, scaling proportionally', async () => {

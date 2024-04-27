@@ -1,30 +1,16 @@
 /* eslint-env mocha */
 
 const { expect } = require('chai');
-const jimp = require('jimp');
-const isPng = require('is-png');
+const { validateImage } = require('./utils.js');
 
 const render = require('../');
 
 describe('module', () => {
-  const validateImage = async ({ width, height, png, hash }) => {
-    expect(isPng(png)).to.equal(true, 'output was not a valid png image');
-
-    const image = await jimp.read(png);
-
-    const { width: actualWidth, height: actualHeight } = image.bitmap;
-
-    expect(actualWidth).to.equal(width, 'unexpected width');
-    expect(actualHeight).to.equal(height, 'unexpected height');
-
-    expect(image.hash()).to.equal(hash);
-  };
-
   it('converts an svg to the size of its viewbox', async () => {
     const input = '<svg viewBox="0 0 50 50"><circle cx="25" cy="25" r="25" fill="red"/><circle cx="40" cy="40" r="10" fill="black"/></svg>';
     const png = await render({ buffer: Buffer.from(input) });
 
-    await validateImage({ png, width: 50, height: 50, hash: 'c6SgkEvi5KG' });
+    await validateImage({ png, width: 50, height: 50, hash: ['c6SgkEvi5KG', 'c6QgkEvi5KG'] });
   });
 
   it('converts an svg to a defined width, scaling proportionally', async () => {
@@ -55,8 +41,6 @@ describe('module', () => {
     </svg>
     `;
     const png = await render({ buffer: Buffer.from(input), width: 512, height: 512 });
-
-    require('fs').writeFileSync('out.png', png);
 
     await validateImage({ png, width: 512, height: 512, hash: '8000w0a02E0' });
   });
