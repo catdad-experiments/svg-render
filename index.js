@@ -1,4 +1,4 @@
-const { createCanvas, loadImage } = require('canvas');
+const { createCanvas, loadImage } = require('@napi-rs/canvas');
 const cheerio = require('cheerio');
 
 const resolveUseTags = ($, $svg) => {

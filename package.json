@@ -16,7 +16,7 @@
     "index.js"
   ],
   "dependencies": {
-    "canvas": "^2.8.0",
+    "@napi-rs/canvas": "^0.1.52",
     "cheerio": "^1.0.0-rc.10",
     "getopts": "^2.3.0"
   },
