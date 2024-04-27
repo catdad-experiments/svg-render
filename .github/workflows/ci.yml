@@ -14,19 +14,19 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node: [8, 10, 12, 14]
+        node: [16, 18, 20, 22]
         os: [ubuntu-latest, windows-latest, macOS-latest]
         # these are only excluded so we don't run so many jobs
         # they are more expensive and less likely to be a problem if the rest pass
         exclude:
           - os: macOS-latest
-            node: 8
+            node: 16
           - os: windows-latest
-            node: 8
+            node: 18
           - os: macOS-latest
-            node: 10
+            node: 20
           - os: ubuntu-latest
-            node: 12
+            node: 22
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node }}
