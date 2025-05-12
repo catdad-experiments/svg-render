@@ -74,10 +74,6 @@ describe('module', () => {
     </svg>`;
     const png = await render({ buffer: Buffer.from(input), width: 200 });
 
-    await import('fs/promises').then(async (fs) => {
-      await fs.writeFile('sample.png', png);
-    });
-
     await validateImage({ png, width: 200, height: 100, hash: 'ef0003y01x0' });
   });
 
