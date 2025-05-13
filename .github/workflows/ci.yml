@@ -26,9 +26,9 @@ jobs:
           - os: macOS-latest
             node: 22
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
           registry-url: https://registry.npmjs.org/
@@ -41,19 +41,12 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/') && github.event_name != 'pull_request'
     needs: test
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 14
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 18
           registry-url: https://registry.npmjs.org/
       - run: npm install
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-      - name: Output logs
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: npm-logs
-          path: /home/runner/.npm/_logs/**
