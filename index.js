@@ -38,6 +38,19 @@ const resolveUseTags = ($, $svg) => {
   });
 };
 
+const resolveViewBox = ($, $svg) => {
+  const viewBox = $svg.attr('viewBox');
+
+  if (viewBox) {
+    return;
+  }
+
+  const width = $svg.attr('width');
+  const height = $svg.attr('height');
+
+  $svg.attr('viewBox', `0 0 ${width} ${height}`);
+};
+
 module.exports = async ({ buffer, width, height } = {}) => {
   if (!Buffer.isBuffer(buffer)) {
     throw new Error('required "options.buffer" is missing');
@@ -49,6 +62,9 @@ module.exports = async ({ buffer, width, height } = {}) => {
   if ($svg.length < 1) {
     throw new Error('"options.buffer" is not a valid SVG image');
   }
+
+  resolveViewBox($, $svg);
+  resolveUseTags($, $svg);
 
   const { naturalWidth, naturalHeight } = await loadImage(Buffer.from($.xml($svg)));
 
@@ -71,7 +87,6 @@ module.exports = async ({ buffer, width, height } = {}) => {
   $svg.attr('width', `${w}`);
   $svg.attr('height', `${h}`);
 
-  resolveUseTags($, $svg);
 
   const image = await loadImage(Buffer.from($.xml($svg)));
   const canvas = createCanvas(w, h);

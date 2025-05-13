@@ -62,6 +62,21 @@ describe('module', () => {
     await validateImage({ png, width: 50, height: 50, hash: 'c7343wq04L3' });
   });
 
+  it('renders images without a viewbox', async () => {
+    const input = `
+    <svg width="100" height="50" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="25" cy="25" r="25" fill="red"/>
+      <rect width="20" height="20" x="0" fill="cyan" />
+      <rect width="20" height="20" x="20" fill="magenta" />
+      <rect width="20" height="20" x="40" fill="yellow" />
+      <rect width="20" height="20" x="60" fill="black" />
+      <rect width="20" height="20" x="80" fill="gray" />
+    </svg>`;
+    const png = await render({ buffer: Buffer.from(input), width: 200 });
+
+    await validateImage({ png, width: 200, height: 100, hash: 'ef0003y01x0' });
+  });
+
   it('errors if the input is not an SVG image', async () => {
     let error;
 
